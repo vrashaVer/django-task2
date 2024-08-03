@@ -1,4 +1,6 @@
-import django_setup
+from django_setup import django_setup
+django_setup()
+
 from action_over_models import (
     add_subject, edit_subject, delete_subject,
     add_teacher,add_class, edit_class, delete_class,

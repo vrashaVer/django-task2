@@ -1,5 +1,6 @@
 import os
 import django
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE","school_schedule.settings")
-django.setup()
+def django_setup():
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE","school_schedule.settings")
+    django.setup()

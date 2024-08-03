@@ -123,7 +123,7 @@ def edit_class():
         student_class.name = new_name
 
     while True:
-        new_year = input("Enter new class name (leave blank to keep the current name): ").strip()
+        new_year = input("Enter new class year (leave blank to keep the current name): ").strip()
         if new_year:
             try:
                 student_class.year = int(new_year)
@@ -167,7 +167,7 @@ def add_student():
         class_name = input("Enter class name: ").strip()
         if class_name:
             try:
-                student_class = Class.objects.get(name=student_class)
+                student_class = Class.objects.get(name=class_name)
                 break
             except Class.DoesNotExist:
                 print("Class does not exist. Please enter a valid class name.")
@@ -212,7 +212,7 @@ def add_schedule():
         class_name  = input("Enter class name: ").strip()
         if class_name :
             try:
-                student_class = Class.objects.get(name=student_class)
+                student_class = Class.objects.get(name=class_name)
                 break
             except Class.DoesNotExist:
                 print("Class does not exist. Please enter a valid class name.")
@@ -228,8 +228,15 @@ def add_schedule():
     while True:
         time = input("Enter start time (HH:MM): ").strip()
         if time:
-            break
-        print("Start time cannot be empty. Please try again.")
+            if re.match(r'^[0-2][0-9]:[0-5][0-9]$', time):
+                break
+            else:
+                print("Invalid time format. Please enter in HH:MM format.")
+        else:
+            print("Start time cannot be empty. Please try again.")
+
+        
+        
     
     Schedule.objects.create(subject=subject,teacher=teacher,student_class=student_class,day_of_week=day_of_week,time=time)
     print("Schedule added successfully.")
@@ -249,9 +256,9 @@ def add_grade():
             print("Last name cannot be empty. Please try again.")
         
         try:
-            student = Teacher.objects.get(first_name=student_first_name, last_name= student_last_name)
+            student = Student.objects.get(first_name=student_first_name, last_name= student_last_name)
             break
-        except Teacher.DoesNotExist:
+        except Student.DoesNotExist:
             print("Student does not exist. Please enter a valid student name.")
 
     while True:
